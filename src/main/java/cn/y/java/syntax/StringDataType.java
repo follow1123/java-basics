@@ -1,5 +1,8 @@
 package cn.y.java.syntax;
 
+/**
+ * 字符串
+ */
 public class StringDataType {
     public static void main(String[] args) {
         int i1 = 234;

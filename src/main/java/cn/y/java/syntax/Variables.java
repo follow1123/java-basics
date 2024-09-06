@@ -1,10 +1,14 @@
 package cn.y.java.syntax;
 
-import javax.swing.plaf.IconUIResource;
+import org.junit.jupiter.api.Test;
 
+/**
+ * 变量
+ */
 public class Variables {
 
-    public static void main(String[] args) {
+    @Test
+    public void testVariables() {
         boolean result = true;
 
         char c1 = 'C';
@@ -31,7 +35,8 @@ public class Variables {
     /**
      * 测试精度问题
      */
-    public static void testFloat() {
+    @Test
+    public void testFloat() {
         System.out.println(0.1 + 0.2); // 0.30000000000000004
 
         float ff1 = 123123123F;
@@ -44,7 +49,8 @@ public class Variables {
     /**
      * 测试自动类型提升
      */
-    public static void testAutoTypePromotion(){
+    @Test
+    public void testAutoTypePromotion(){
         int i1 = 100;
         long l1 = i1;
         float f1 = l1;
@@ -66,7 +72,8 @@ public class Variables {
     /**
      * 测试强制类型转换
      */
-    public static void testTypeConversion(){
+    @Test
+    public void testTypeConversion(){
         long l1 = 34;
         // int i1 = l1; // 编译不通过
         int i1 = (int) l1;
