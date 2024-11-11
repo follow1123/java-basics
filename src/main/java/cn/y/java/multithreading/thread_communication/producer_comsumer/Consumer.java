@@ -12,11 +12,7 @@ public class Consumer extends Thread{
     @Override
     public void run() {
         while (true) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            try {Thread.sleep(200);} catch (InterruptedException e) {throw new RuntimeException(e);}
             clerk.minusProduct();
         }
     }

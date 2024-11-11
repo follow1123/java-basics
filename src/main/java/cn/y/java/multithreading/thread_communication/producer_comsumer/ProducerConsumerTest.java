@@ -8,9 +8,9 @@ public class ProducerConsumerTest {
         Consumer consumer1 = new Consumer(clerk, "消费者1");
         Consumer consumer2 = new Consumer(clerk, "消费者2");
 
+        // 一个生产者，两个消费者
         producer.start();
         consumer1.start();
         consumer2.start();
-
     }
 }

@@ -9,11 +9,7 @@ public class Clerk {
 
     public synchronized void addProduct(){
         if (product == 20){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            try {wait();} catch (InterruptedException e) {throw new RuntimeException(e);}
         }else {
             System.out.println(Thread.currentThread().getName() + "开始生成商品---" + ++product);
             notifyAll();
@@ -22,11 +18,7 @@ public class Clerk {
 
     public synchronized void minusProduct(){
         if (product == 0){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            try {wait();} catch (InterruptedException e) {throw new RuntimeException(e);}
         }else {
             System.out.println(Thread.currentThread().getName() + "开始消费商品---" + product--);
             notifyAll();

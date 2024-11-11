@@ -3,10 +3,9 @@ package cn.y.java.multithreading.thread_safe.singleton;
 public class SingletonObj {
 
     private SingletonObj(){}
-
     private static SingletonObj instance;
 
-    public static SingletonObj getInstance(){
+    public static synchronized SingletonObj getInstance(){
         if(instance == null){
             try {
                 Thread.sleep(10);

@@ -12,11 +12,7 @@ public class Producer extends Thread{
     @Override
     public void run() {
         while (true) {
-            try {
-                Thread.sleep(80);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            try {Thread.sleep(80);} catch (InterruptedException e) {throw new RuntimeException(e);}
             clerk.addProduct();
         }
     }
