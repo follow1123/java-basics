@@ -7,14 +7,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ThreadLifecycleTest {
 
-    private static void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * 测试线程创建，运行和终止
      */
@@ -29,7 +21,7 @@ public class ThreadLifecycleTest {
         System.out.println(thread.getState()); // NEW
         thread.start();
 
-        sleep(1000);
+        try{Thread.sleep(1000);}catch(InterruptedException e){e.printStackTrace();}
 
         System.out.println(thread.getState()); // TERMINATED
     }
@@ -39,29 +31,25 @@ public class ThreadLifecycleTest {
      */
     @Test
     public void testBlocked() {
-        Object lock = new Object();
-        Thread[] threads = new Thread[2];
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                synchronized (lock) {
+                synchronized (this) {
                     System.out.println(Thread.currentThread().getName() + " get lock");
-                    // 获取锁后打印所有线程的状态
-                    System.out.println(threads[0].getName() + "---" + threads[0].getState());
-                    System.out.println(threads[1].getName() + "---" + threads[1].getState());
+                    try{Thread.sleep(1000);}catch(InterruptedException e){e.printStackTrace();}
                 }
             }
         };
 
         Thread thread1 = new Thread(runnable);
         Thread thread2 = new Thread(runnable);
-        threads[0] = thread1;
-        threads[1] = thread2;
-
         thread1.start();
         thread2.start();
 
-        sleep(1000);
+        try{Thread.sleep(500);}catch(InterruptedException e){e.printStackTrace();}
+        // 以下有一个线程的状态是BLOCKED
+        System.out.println(thread1.getState());
+        System.out.println(thread2.getState());
     }
 
     /**
@@ -73,31 +61,22 @@ public class ThreadLifecycleTest {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                sleep(1000);
+                try{Thread.sleep(1000);}catch(InterruptedException e){e.printStackTrace();}
             }
         });
         // 使用join方式
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    thread1.join(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                try {thread1.join(500);} catch (InterruptedException e) {throw new RuntimeException(e);}
             }
         });
         // 使用wait方式
-        Object lock = new Object();
         Thread thread3 = new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (lock){
-                    try {
-                        lock.wait(800);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                synchronized (this){
+                    try {wait(800);} catch (InterruptedException e) {throw new RuntimeException(e);}
                 }
             }
         });
@@ -106,7 +85,7 @@ public class ThreadLifecycleTest {
         thread2.start();
         thread3.start();
 
-        sleep(200);
+        try{Thread.sleep(200);}catch(InterruptedException e){e.printStackTrace();}
         System.out.println(thread1.getState()); // TIMED_WAITING
         System.out.println(thread2.getState()); // TIMED_WAITING
         System.out.println(thread3.getState()); // TIMED_WAITING
@@ -117,43 +96,28 @@ public class ThreadLifecycleTest {
      */
     @Test
     public void testWaiting() {
-        // 使用wait方式
-        Object lock = new Object();
-        Thread thread1 = new Thread(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                synchronized (lock){
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                synchronized (this) {
+                    try {wait();} catch (InterruptedException e) {throw new RuntimeException(e);}
                 }
             }
-        });
+        };
+        // 使用wait方式
+        Thread thread1 = new Thread(runnable);
         // 使用join方式
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    thread1.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                try {thread1.join();} catch (InterruptedException e) {throw new RuntimeException(e);}
             }
         });
 
         thread1.start();
         thread2.start();
-
-        sleep(200);
+        try{Thread.sleep(200);}catch(InterruptedException e){e.printStackTrace();}
         System.out.println(thread1.getState()); // WAITING
         System.out.println(thread2.getState()); // WAITING
-
-        // 打印后唤醒thread2
-        synchronized (lock){
-            lock.notify();
-        }
-
     }
 }
