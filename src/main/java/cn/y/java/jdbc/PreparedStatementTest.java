@@ -12,7 +12,7 @@ public class PreparedStatementTest {
         // 注册驱动
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        InputStream is = JDBCTest.class.getClassLoader().getResourceAsStream("jdbc_config.propreties");
+        InputStream is = JDBCTest.class.getClassLoader().getResourceAsStream("jdbc_config.properties");
         Properties props = new Properties();
         props.load(is);
 
@@ -34,7 +34,7 @@ public class PreparedStatementTest {
 
         while (resultSet.next()) {
             // 通过列下标获取数据，下标从1开始，不推荐
-            int id = resultSet.getInt(1);
+            long id = resultSet.getLong(1);
             String name = resultSet.getString("name");
             int age = resultSet.getInt("age");
             double points = resultSet.getDouble("points");

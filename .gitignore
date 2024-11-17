@@ -31,4 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/jdbc_config.propreties
+/src/main/resources/jdbc_config.properties
+/src/main/resources/db.properties
+/src/main/resources/hikari.properties

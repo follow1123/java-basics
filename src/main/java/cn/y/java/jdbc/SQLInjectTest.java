@@ -12,7 +12,7 @@ public class SQLInjectTest {
         // 注册驱动
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        InputStream is = SQLInjectTest.class.getClassLoader().getResourceAsStream("jdbc_config.propreties");
+        InputStream is = SQLInjectTest.class.getClassLoader().getResourceAsStream("jdbc_config.properties");
         Properties props = new Properties();
         props.load(is);
 
@@ -33,7 +33,7 @@ public class SQLInjectTest {
         ResultSet resultSet = statement.executeQuery(sql);
 
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
+            long id = resultSet.getLong("id");
             String name = resultSet.getString("name");
             int age = resultSet.getInt("age");
             double points = resultSet.getDouble("points");

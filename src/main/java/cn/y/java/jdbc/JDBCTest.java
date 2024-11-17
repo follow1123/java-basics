@@ -12,7 +12,7 @@ public class JDBCTest {
         // 注册驱动
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        InputStream is = JDBCTest.class.getClassLoader().getResourceAsStream("jdbc_config.propreties");
+        InputStream is = JDBCTest.class.getClassLoader().getResourceAsStream("jdbc_config.properties");
         Properties props = new Properties();
         props.load(is);
 
@@ -30,7 +30,7 @@ public class JDBCTest {
         ResultSet resultSet = statement.executeQuery(sql);
 
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
+            long id = resultSet.getLong("id");
             String name = resultSet.getString("name");
             int age = resultSet.getInt("age");
             double points = resultSet.getDouble("points");
